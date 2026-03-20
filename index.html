@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swipe It Vibe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <span class="logo">📸 Swipe It Vibe</span>
+    <div class="nav-buttons">
+      <button class="nav-btn active" id="btn-swipe" onclick="showView('swipe')">Swipen</button>
+      <button class="nav-btn" id="btn-gallery" onclick="showView('gallery')">Galerij</button>
+    </div>
+  </nav>
+
+  <!-- SWIPE VIEW -->
+  <div id="view-swipe" class="view">
+    <div class="upload-zone" id="upload-zone">
+      <input type="file" id="file-input" accept="image/*" multiple hidden />
+      <div class="upload-content" onclick="document.getElementById('file-input').click()">
+        <div class="upload-icon">📁</div>
+        <p>Klik om foto's te uploaden</p>
+        <p class="upload-hint">of sleep ze hierheen</p>
+      </div>
+    </div>
+
+    <div class="swipe-area" id="swipe-area">
+      <div class="card-stack" id="card-stack">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <div class="swipe-labels">
+        <div class="label-left" id="label-left">❌ Nee</div>
+        <div class="label-right" id="label-right">✅ Ja</div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="action-btn btn-no" onclick="swipeCard('left')">❌</button>
+        <button class="action-btn btn-undo" onclick="undoLast()" title="Ongedaan maken">↩</button>
+        <button class="action-btn btn-yes" onclick="swipeCard('right')">✅</button>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <p class="progress-text" id="progress-text"></p>
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">🎉</div>
+      <h2>Alle foto's geswiped!</h2>
+      <p>Bekijk je resultaten in de <strong>Galerij</strong>.</p>
+      <button class="primary-btn" onclick="showView('gallery')">Naar galerij →</button>
+    </div>
+  </div>
+
+  <!-- GALLERY VIEW -->
+  <div id="view-gallery" class="view hidden">
+    <div class="gallery-header">
+      <h2>Jouw foto's</h2>
+      <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all" onclick="filterGallery('all', this)">Alles</button>
+        <button class="filter-btn" data-filter="ja" onclick="filterGallery('ja', this)">✅ Ja</button>
+        <button class="filter-btn" data-filter="nee" onclick="filterGallery('nee', this)">❌ Nee</button>
+        <button class="filter-btn" data-filter="unswiped" onclick="filterGallery('unswiped', this)">⏳ Nog niet</button>
+      </div>
+      <button class="danger-btn" onclick="clearAll()">🗑 Alles wissen</button>
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Gallery items rendered by JS -->
+    </div>
+
+    <div class="gallery-empty" id="gallery-empty">
+      <p>Nog geen foto's. Upload ze in de Swipen-tab!</p>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-tag" id="lightbox-tag"></div>
+      <p class="lightbox-name" id="lightbox-name"></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
